@@ -49,7 +49,13 @@ fprintf('Slant Range            %6.2f km\n', D)
 % Why or why not?
 
 P = 2*pi*sqrt(r^3/mu);
-ACR = (4*pi/P) * sind(lambda);
+ACR = (4*pi/P) * sind(lambda); 
+
+coverage_per_orbit = ACR*r_e^2 * P;
+orbits_per_day = 24*60*60 / P;
+coverage_per_day = coverage_per_orbit * orbits_per_day;
 
 fprintf('\n---------- 4.4 ----------\n')
-fprintf('ACR                    %.3e m^2/s\n', ACR)
+fprintf('ACR                    %.3e km^2/s\n', ACR*r_e^2)
+fprintf('Area per Orbit         %.3e km^2/s\n', coverage_per_orbit)
+fprintf('Coverage per Day       %.3e km^2/s\n', coverage_per_day)
