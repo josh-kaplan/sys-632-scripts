@@ -77,11 +77,14 @@ dV_2 = v_2 - v_a;
 % I'm not sure where this burn can actually occur. It depends on RAAN
 % I think. But we'll ignore it for now and just say it occurs at tranfer
 % apogeee.
-dV_p = 2*v_a*sin((i_2 - i_1)/2);
+dV_p = 2*v_a*sind((i_2 - i_1)/2);
 
 dV_total = dV_1 + dV_2 + dV_p;
 
 fprintf('\n---------- 3.3 ----------\n')
+fprintf('delta-V_1    = %6.3f km/s\n', dV_1);
+fprintf('delta-V_2    = %6.3f km/s\n', dV_2);
+fprintf('delta-V_p    = %6.3f km/s\n', dV_p);
 fprintf('Total delta-V = %6.3f km/s\n', dV_total);
 
 
@@ -227,16 +230,18 @@ rho = 4.39e-14;
 % Drag ?V = ?*(1/BC)*?*a*v in m/s per orbit
 delta_V_drag = pi * (1/BC) * rho * r_2 * v_2; 
 
+disp(delta_V_drag)
 % Total ?V due to drag over lifetime
 life = 6 * 365.25 * 25 * 60 * 60;
 lifetime_orbits = life / P_2;
 delta_V_drag = delta_V_drag * lifetime_orbits;
 
 % Convert to km/s for consistency
-delta_V_drag = delta_V_drag * 1000;
+delta_V_drag = delta_V_drag / 1000;
 
 fprintf('\n---------- 3.5 ----------\n')
-fprintf('Total delta-V due to drag %8.3f km/s\n', delta_V_drag);
+fprintf('Total No. of Orbits: %d\n', round(lifetime_orbits))
+fprintf('Total delta-V due to drag %.3e km/s\n', delta_V_drag);
 
 %% Problem 3.6
 % International orbital debris mitigation guidelines recommend each 
@@ -252,7 +257,7 @@ v_deorbit_apo = sqrt(mu*(2/r_deorbit_apo - 1/a_deorbit));
 delta_V_deorbit = abs(v_2 - v_deorbit_apo);
 
 fprintf('\n---------- 3.6 ----------\n')
-fprintf('Total delta-V to deorbit %8.3f km/s\n', delta_V_deorbit);
+fprintf('Total delta-V to deorbit %.3e km/s\n', delta_V_deorbit);
 
 
 %% Problem 3.7
